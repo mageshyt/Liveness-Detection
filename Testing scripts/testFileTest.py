@@ -1,9 +1,4 @@
 
-# open the file is append mode
-file=open("test.txt",'a')
+from utils.FileOperation import write_file
 
-file.write("Hello World\n")
-
-# close the file
-file.close()
-
+write_file('test.txt', 'Hello, World! i am magesh')
