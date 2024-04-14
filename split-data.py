@@ -1,7 +1,7 @@
 import os
 import random
 import shutil
-from itertools  import islice
+from itertools import islice
 import yaml
 
 # Constants for offset percentages
@@ -16,7 +16,6 @@ except OSError as e:
     print("Creating new folder")
     os.mkdir(OUTPUT_FOLDER)
 
-
 # Split data into training and testing sets
 os.makedirs(OUTPUT_FOLDER + '/train/images', exist_ok=True)
 os.makedirs(OUTPUT_FOLDER + '/train/labels', exist_ok=True)
@@ -29,14 +28,14 @@ os.makedirs(OUTPUT_FOLDER + '/test/labels', exist_ok=True)
 
 # get the names
 
-listNames=os.listdir(INPUT_FOLDER)
+listNames = os.listdir(INPUT_FOLDER)
 print(listNames)
 print("Size of the list is: ", len(listNames))
 
 uniqueNames = []
 
 for name in listNames:
-    uniqueNames.append(name.split('.')[0]) # get the name without the extension
+    uniqueNames.append(name.split('.')[0])  # get the name without the extension
 
 # remove duplicates
 uniqueNames = list(set(uniqueNames))
@@ -58,8 +57,9 @@ print("Validation size: ", val_size)
 print("Test size: ", test_size)
 
 train_names = uniqueNames[:train_size]
-val_names = uniqueNames[train_size:train_size+val_size]
-test_names = uniqueNames[train_size+val_size:]
+val_names = uniqueNames[train_size:train_size + val_size]
+test_names = uniqueNames[train_size + val_size:]
+
 
 # copy the images and labels to the respective folders
 def copyFiles(names, folder):
@@ -67,6 +67,7 @@ def copyFiles(names, folder):
         # copy on Input folder
         shutil.copyfile(f"{INPUT_FOLDER}/{name}.jpg", f"{OUTPUT_FOLDER}/{folder}/images/{name}.jpg")
         shutil.copyfile(f"{INPUT_FOLDER}/{name}.txt", f"{OUTPUT_FOLDER}/{folder}/labels/{name}.txt")
+
 
 copyFiles(train_names, 'train')
 copyFiles(val_names, 'val')
@@ -76,10 +77,10 @@ print("Data split successfully!")
 
 # create data yaml
 data = dict(
-    train = f"{OUTPUT_FOLDER}/train/images",
-    val = f"{OUTPUT_FOLDER}/val/images",
-    nc = len(classes),
-    names = classes
+    train=f"{OUTPUT_FOLDER}/train/images",
+    val=f"{OUTPUT_FOLDER}/val/images",
+    nc=len(classes),
+    names=classes
 )
 
 # write yaml file
@@ -88,4 +89,3 @@ with open(f"{OUTPUT_FOLDER}/data.yaml", 'w') as outfile:
     yaml.dump(data, outfile, default_flow_style=False)
 
 print("Data yaml created successfully!")
-
